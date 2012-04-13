@@ -7,17 +7,24 @@
 //
 
 #import "JHAppDelegate.h"
+#import "JHConstants.h"
 
 @implementation JHAppDelegate
 
 @synthesize window = _window;
+@synthesize locationUpdater = _locationUpdater;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
-    self.window.backgroundColor = [UIColor whiteColor];
-    [self.window makeKeyAndVisible];
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL] == nil)
+    {
+        UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Server URL" message:@"You must specify the server URL" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
+        [alertView show];
+    }
+    
+    self.locationUpdater = [[JHLocationUpdater alloc] init];
+
     return YES;
 }
 
@@ -46,6 +53,13 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    [[NSUserDefaults standardUserDefaults] setValue:[alertView textFieldAtIndex:0].text forKey:JHServerURL];
 }
 
 @end

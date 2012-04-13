@@ -1,0 +1,378 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="1.1" toolsVersion="2182" systemVersion="11D50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" initialViewController="8Ti-Gb-hkG">
+    <dependencies>
+        <deployment defaultVersion="1296" identifier="iOS"/>
+        <development defaultVersion="4200" identifier="xcode"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="1181"/>
+    </dependencies>
+    <scenes>
+        <!--Tab Bar Controller-->
+        <scene sceneID="GZ1-aa-uLM">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="deU-Cc-hvI" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tabBarController definesPresentationContext="YES" id="jhg-0L-fgX" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="urW-Ra-Ony"/>
+                    <nil key="simulatedBottomBarMetrics"/>
+                    <tabBar key="tabBar" contentMode="scaleToFill" id="thn-t7-dLB">
+                        <rect key="frame" x="129" y="330" width="163" height="49"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    </tabBar>
+                    <connections>
+                        <segue destination="uzb-Gs-mRR" kind="relationship" relationship="viewControllers" id="wjd-cZ-tkI"/>
+                        <segue destination="rtx-Y7-gzh" kind="relationship" relationship="viewControllers" id="3X6-Ld-eVW"/>
+                    </connections>
+                </tabBarController>
+            </objects>
+            <point key="canvasLocation" x="-44" y="-875"/>
+        </scene>
+        <!--Initial View Controller-->
+        <scene sceneID="z3R-9Q-Kgc">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="IGK-hi-6ok" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="8Ti-Gb-hkG" customClass="JHInitialViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="adh-5i-evO">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <label opaque="NO" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="left" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" minimumFontSize="10" id="iSG-wg-9wb">
+                                <rect key="frame" x="21" y="390" width="280" height="32"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" style="whiteLarge" id="eQe-dE-ssc">
+                                <rect key="frame" x="143" y="345" width="37" height="37"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinY="YES"/>
+                            </activityIndicatorView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" image="jHouse-transparent.png" id="6uX-XM-KJA">
+                                <rect key="frame" x="20" y="82" width="280" height="255"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="activityIndicator" destination="eQe-dE-ssc" id="eT9-XM-gSc"/>
+                        <outlet property="loadingImage" destination="6uX-XM-KJA" id="K8u-bQ-O9s"/>
+                        <outlet property="loadingLabel" destination="iSG-wg-9wb" id="hgZ-bP-sQh"/>
+                        <segue destination="jhg-0L-fgX" kind="modal" identifier="LoadApp" modalTransitionStyle="crossDissolve" id="e9M-T4-eCJ"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="-556" y="-875"/>
+        </scene>
+        <!--Locations View Controller - Locations-->
+        <scene sceneID="dhl-Lo-hUp">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Mjt-Jm-xiC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="rtx-Y7-gzh" customClass="JHLocationsViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="E9A-Ug-QJ6">
+                        <rect key="frame" x="0.0" y="20" width="320" height="411"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" id="K4n-aO-TSU">
+                                <rect key="frame" x="0.0" y="44" width="320" height="367"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                <connections>
+                                    <outlet property="delegate" destination="rtx-Y7-gzh" id="bM5-PU-3rb"/>
+                                </connections>
+                            </mapView>
+                            <navigationBar contentMode="scaleToFill" id="R2K-eC-3NZ">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMaxY="YES"/>
+                                <items>
+                                    <navigationItem title="Locations" id="NeQ-3V-1kH">
+                                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="Hc3-cu-LMO">
+                                            <connections>
+                                                <action selector="refreshMapButton:" destination="rtx-Y7-gzh" id="ohd-Ka-sC3"/>
+                                            </connections>
+                                        </barButtonItem>
+                                    </navigationItem>
+                                </items>
+                            </navigationBar>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                    </view>
+                    <tabBarItem key="tabBarItem" title="Locations" image="Scanner.png" id="W5g-mH-YPY"/>
+                    <connections>
+                        <outlet property="mapView" destination="K4n-aO-TSU" id="Q7h-Ie-MRV"/>
+                        <outlet property="refreshMap" destination="Hc3-cu-LMO" id="mNN-OI-gae"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="470" y="-476"/>
+        </scene>
+        <!--Webcam List View Controller - Webcams-->
+        <scene sceneID="GIK-bf-gVo">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="dW7-1h-P6a" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <tableViewController id="t63-qk-mbW" customClass="JHWebcamListViewController" sceneMemberID="viewController">
+                    <tableView key="view" opaque="NO" clipsSubviews="YES" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" rowHeight="44" sectionHeaderHeight="22" sectionFooterHeight="22" id="MyK-d1-nuC">
+                        <rect key="frame" x="0.0" y="64" width="320" height="367"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <prototypes>
+                            <tableViewCell contentMode="scaleToFill" selectionStyle="blue" accessoryType="disclosureIndicator" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="Cell" id="z8s-vb-0U7">
+                                <rect key="frame" x="0.0" y="22" width="320" height="44"/>
+                                <autoresizingMask key="autoresizingMask"/>
+                                <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
+                                    <rect key="frame" x="0.0" y="0.0" width="300" height="43"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                </view>
+                                <connections>
+                                    <segue destination="AqB-BB-pc5" kind="push" identifier="WebcamDetailView" id="YPZ-z7-29A"/>
+                                </connections>
+                            </tableViewCell>
+                        </prototypes>
+                    </tableView>
+                    <navigationItem key="navigationItem" title="Webcams" id="gnn-7m-WRO">
+                        <barButtonItem key="rightBarButtonItem" systemItem="refresh" id="1hX-2L-xTU">
+                            <connections>
+                                <action selector="refreshTable:" destination="t63-qk-mbW" id="BzY-xd-KkP"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="webcamTableView" destination="MyK-d1-nuC" id="kvQ-6A-zJH"/>
+                    </connections>
+                </tableViewController>
+            </objects>
+            <point key="canvasLocation" x="1004" y="-1211"/>
+        </scene>
+        <!--Webcam Detail View Controller-->
+        <scene sceneID="Cbu-OO-mXT">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1q7-yn-0DN" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController hidesBottomBarWhenPushed="YES" id="AqB-BB-pc5" customClass="JHWebcamDetailViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Idm-HU-yOc">
+                        <rect key="frame" x="0.0" y="64" width="320" height="372"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" id="4kF-62-7fq">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="372"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </imageView>
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="0HB-sm-FMV" userLabel="buttonPanUp">
+                                <rect key="frame" x="96" y="20" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonPanUpTouchDown:" destination="AqB-BB-pc5" eventType="touchDown" id="bCN-ky-cJU"/>
+                                    <action selector="buttonPanUpTouchUp:" destination="AqB-BB-pc5" eventType="touchUpInside" id="x4T-Ku-pCb"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="vWJ-cl-p5h" userLabel="buttonPanDown">
+                                <rect key="frame" x="97" y="261" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonPanDownTouchDown:" destination="AqB-BB-pc5" eventType="touchDown" id="0LK-ah-GqC"/>
+                                    <action selector="buttonPanDownTouchUp:" destination="AqB-BB-pc5" eventType="touchUpInside" id="Sf3-6U-XMH"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="3a7-91-U4P" userLabel="buttonPanLeft">
+                                <rect key="frame" x="20" y="140.5" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonPanLeftTouchDown:" destination="AqB-BB-pc5" eventType="touchDown" id="Gmw-65-VHr"/>
+                                    <action selector="buttonPanLeftTouchUp:" destination="AqB-BB-pc5" eventType="touchUpInside" id="mdQ-ex-fGx"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" alpha="0.30000001192092896" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" id="n0v-Lc-AeF" userLabel="buttonPanRight">
+                                <rect key="frame" x="172" y="140.5" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="boldSystem" size="button"/>
+                                <state key="normal">
+                                    <color key="titleColor" red="0.1960784314" green="0.30980392159999998" blue="0.52156862749999999" alpha="1" colorSpace="calibratedRGB"/>
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="buttonPanRightTouchDown:" destination="AqB-BB-pc5" eventType="touchDown" id="bz1-bN-0yW"/>
+                                    <action selector="buttonPanRightTouchUp:" destination="AqB-BB-pc5" eventType="touchUpInside" id="onf-g3-pFF"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" image="arrow_up.png" id="HTO-z3-5g7" userLabel="imagePanUp">
+                                <rect key="frame" x="97" y="20" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" image="arrow_down.png" id="4Ni-rI-PfO" userLabel="imagePanDown">
+                                <rect key="frame" x="97" y="261" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMaxX="YES" flexibleMinY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" image="arrow_left.png" id="WLf-da-nz4" userLabel="imagePanLeft">
+                                <rect key="frame" x="20" y="140" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" alpha="0.0" contentMode="center" image="arrow_right.png" id="2j9-PD-lA8" userLabel="imagePanRight">
+                                <rect key="frame" x="173" y="140" width="127" height="91"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMinX="YES" flexibleMinY="YES" flexibleMaxY="YES"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <toolbarItems>
+                        <barButtonItem style="plain" systemItem="flexibleSpace" id="vnW-Zu-RRb"/>
+                        <barButtonItem image="gear.png" style="plain" id="0lr-JY-DzG">
+                            <connections>
+                                <segue destination="0yJ-8u-e0F" kind="modal" identifier="WebcamConfigView" modalTransitionStyle="partialCurl" id="Gw7-ya-Mro"/>
+                            </connections>
+                        </barButtonItem>
+                    </toolbarItems>
+                    <navigationItem key="navigationItem" id="Lo5-1a-KS4"/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <outlet property="buttonPanDown" destination="vWJ-cl-p5h" id="1bU-Q4-CWX"/>
+                        <outlet property="buttonPanLeft" destination="3a7-91-U4P" id="YnW-2M-WaC"/>
+                        <outlet property="buttonPanRight" destination="n0v-Lc-AeF" id="9oP-8x-Pg2"/>
+                        <outlet property="buttonPanUp" destination="0HB-sm-FMV" id="gn3-f6-bDg"/>
+                        <outlet property="imageViewPanDown" destination="4Ni-rI-PfO" id="kgg-L3-0iz"/>
+                        <outlet property="imageViewPanLeft" destination="WLf-da-nz4" id="7dj-T5-Sep"/>
+                        <outlet property="imageViewPanRight" destination="2j9-PD-lA8" id="iXD-BD-rTz"/>
+                        <outlet property="imageViewPanUp" destination="HTO-z3-5g7" id="z84-ML-rB8"/>
+                        <outlet property="webcamImageView" destination="4kF-62-7fq" id="ovz-dg-sFM"/>
+                    </connections>
+                </viewController>
+            </objects>
+            <point key="canvasLocation" x="1484" y="-1211"/>
+        </scene>
+        <!--Webcam Config View Controller-->
+        <scene sceneID="zga-nu-B4P">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="7li-PF-q43" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <viewController id="0yJ-8u-e0F" customClass="JHWebcamConfigViewController" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="uQf-NS-7pg">
+                        <rect key="frame" x="0.0" y="20" width="320" height="460"/>
+                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                        <subviews>
+                            <segmentedControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="top" segmentControlStyle="plain" selectedSegmentIndex="0" id="Zdc-4e-a3z">
+                                <rect key="frame" x="20" y="397" width="280" height="44"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" flexibleMinY="YES"/>
+                                <segments>
+                                    <segment title="Low"/>
+                                    <segment title="Normal"/>
+                                    <segment title="High"/>
+                                </segments>
+                                <connections>
+                                    <action selector="videoQuality:forEvent:" destination="0yJ-8u-e0F" eventType="valueChanged" id="OdM-h8-c0Y"/>
+                                </connections>
+                            </segmentedControl>
+                        </subviews>
+                        <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
+                        <connections>
+                            <outletCollection property="gestureRecognizers" destination="dFJ-ab-wNx" appends="YES" id="yrv-AP-tI7"/>
+                        </connections>
+                    </view>
+                    <connections>
+                        <outlet property="videoQuality" destination="Zdc-4e-a3z" id="7XB-RZ-dsV"/>
+                    </connections>
+                </viewController>
+                <tapGestureRecognizer id="dFJ-ab-wNx">
+                    <connections>
+                        <action selector="tapGesture:" destination="0yJ-8u-e0F" id="z1b-yW-9mh"/>
+                        <outlet property="delegate" destination="0yJ-8u-e0F" id="Zcw-uB-ng5"/>
+                    </connections>
+                </tapGestureRecognizer>
+            </objects>
+            <point key="canvasLocation" x="1989" y="-1211"/>
+        </scene>
+        <!--Navigation Controller - Webcams-->
+        <scene sceneID="W67-kb-h5H">
+            <objects>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="P8s-C8-laz" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <navigationController definesPresentationContext="YES" id="uzb-Gs-mRR" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Webcams" image="camera.png" id="SF9-uw-2OB"/>
+                    <navigationBar key="navigationBar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" id="TMr-K8-viJ">
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <toolbar key="toolbar" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="jcy-aB-Z2x">
+                        <rect key="frame" x="0.0" y="436" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </toolbar>
+                    <connections>
+                        <segue destination="t63-qk-mbW" kind="relationship" relationship="rootViewController" id="SG0-xE-OKl"/>
+                    </connections>
+                </navigationController>
+            </objects>
+            <point key="canvasLocation" x="470" y="-1211"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="Scanner.png" width="30" height="30"/>
+        <image name="arrow_down.png" width="48" height="48"/>
+        <image name="arrow_left.png" width="48" height="48"/>
+        <image name="arrow_right.png" width="48" height="48"/>
+        <image name="arrow_up.png" width="48" height="48"/>
+        <image name="camera.png" width="30" height="30"/>
+        <image name="gear.png" width="30" height="30"/>
+        <image name="jHouse-transparent.png" width="500" height="500"/>
+    </resources>
+    <classes>
+        <class className="JHInitialViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JHInitialViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="activityIndicator" candidateClass="UIActivityIndicatorView"/>
+                <relationship kind="outlet" name="loadingImage" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="loadingLabel" candidateClass="UILabel"/>
+            </relationships>
+        </class>
+        <class className="JHLocationsViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JHLocationsViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="refreshMapButton:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="mapView" candidateClass="MKMapView"/>
+                <relationship kind="outlet" name="refreshMap" candidateClass="UIBarButtonItem"/>
+            </relationships>
+        </class>
+        <class className="JHWebcamConfigViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JHWebcamConfigViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="videoQuality:forEvent:" candidateClass="UISegmentedControl"/>
+                <relationship kind="outlet" name="videoQuality" candidateClass="UISegmentedControl"/>
+            </relationships>
+        </class>
+        <class className="JHWebcamDetailViewController" superclassName="UIViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JHWebcamDetailViewController.h"/>
+            <relationships>
+                <relationship kind="outlet" name="buttonPanDown" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPanLeft" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPanRight" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="buttonPanUp" candidateClass="UIButton"/>
+                <relationship kind="outlet" name="imageViewPanDown" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageViewPanLeft" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageViewPanRight" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="imageViewPanUp" candidateClass="UIImageView"/>
+                <relationship kind="outlet" name="toolbar" candidateClass="UIToolbar"/>
+                <relationship kind="outlet" name="webcamImageView" candidateClass="UIImageView"/>
+            </relationships>
+        </class>
+        <class className="JHWebcamListViewController" superclassName="UITableViewController">
+            <source key="sourceIdentifier" type="project" relativePath="./Classes/JHWebcamListViewController.h"/>
+            <relationships>
+                <relationship kind="action" name="refreshTable:" candidateClass="UIBarButtonItem"/>
+                <relationship kind="outlet" name="webcamTableView" candidateClass="UITableView"/>
+            </relationships>
+        </class>
+    </classes>
+    <simulatedMetricsContainer key="defaultSimulatedMetrics">
+        <simulatedStatusBarMetrics key="statusBar"/>
+        <simulatedOrientationMetrics key="orientation"/>
+        <simulatedScreenMetrics key="destination"/>
+    </simulatedMetricsContainer>
+</document>

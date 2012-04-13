@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JHLocationUpdater.h"
 
-@interface JHAppDelegate : UIResponder <UIApplicationDelegate>
+@interface JHAppDelegate : UIResponder <UIApplicationDelegate,UIAlertViewDelegate>
 
 @property (strong, nonatomic) UIWindow *window;
+@property (strong, nonatomic) JHLocationUpdater *locationUpdater;
 
 @end
