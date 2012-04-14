@@ -20,8 +20,8 @@ static JHConfig *sharedInstance;
 
 @implementation JHConfig
 
-@synthesize webcamConfigURL;
-@synthesize locationConfigURL;
+@synthesize webcamConfigURL = _webcamConfigURL;
+@synthesize locationConfigURL = _locationConfigURL;
 
 + (JHConfig *)shared
 {
@@ -31,6 +31,18 @@ static JHConfig *sharedInstance;
     }
     
     return sharedInstance;
+}
+
+- (void)dehydrateToCache
+{
+    [[NSUserDefaults standardUserDefaults] setURL:self.webcamConfigURL forKey:@"cacheWebcamConfigURL"];    
+    [[NSUserDefaults standardUserDefaults] setURL:self.locationConfigURL forKey:@"cacheLocationConfigURL"];
+}
+
+- (void)hydrateFromCache
+{
+    self.webcamConfigURL = [[NSUserDefaults standardUserDefaults] URLForKey:@"cacheWebcamConfigURL"];
+    self.locationConfigURL = [[NSUserDefaults standardUserDefaults] URLForKey:@"cacheLocationConfigURL"];    
 }
 
 @end

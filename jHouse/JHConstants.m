@@ -18,9 +18,11 @@ NSString * const JHWebcamVideoQuality = @"webcamVideoQuality";
 NSString * const JHServerIgnoreSSLErrors = @"serverIgnoreSSLErrors";
 NSString * const JHConfigLocationAccuracy = @"locationAccuracy";
 NSString * const JHConfigLocationSendUpdates = @"locationSendUpdates";
+NSString * const JHConfigLocationBackgroundUpdates = @"locationBackgroundUpdates";
+NSString * const JHConfigLocationDistanceFilter = @"locationDistanceFilter";
 
 // Web service locations
 //NSString * const JHWebcamListUri = @"controllers/webcam/list.json";
-//NSString * const JHLocationUpdateUri = @"controllers/location/userUpdate";
+NSString * const JHLocationUpdatePath = @"controllers/location/userUpdate";
 
 @end

@@ -18,9 +18,11 @@ extern NSString * const JHWebcamVideoQuality;
 extern NSString * const JHServerIgnoreSSLErrors;
 extern NSString * const JHConfigLocationAccuracy;
 extern NSString * const JHConfigLocationSendUpdates;
+extern NSString * const JHConfigLocationBackgroundUpdates;
+extern NSString * const JHConfigLocationDistanceFilter;
 
 // Web service locations
 //extern NSString * const JHWebcamListUri;
-//extern NSString * const JHLocationUpdateUri;
+extern NSString * const JHLocationUpdatePath;
 
 @end

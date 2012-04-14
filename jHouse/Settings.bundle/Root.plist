@@ -88,6 +88,16 @@
 		</dict>
 		<dict>
 			<key>Type</key>
+			<string>PSToggleSwitchSpecifier</string>
+			<key>Title</key>
+			<string>Backround Updates</string>
+			<key>Key</key>
+			<string>locationBackgroundUpdates</string>
+			<key>DefaultValue</key>
+			<true/>
+		</dict>
+		<dict>
+			<key>Type</key>
 			<string>PSMultiValueSpecifier</string>
 			<key>Title</key>
 			<string>Accuracy</string>
@@ -102,17 +112,27 @@
 				<string>2</string>
 				<string>3</string>
 				<string>4</string>
-				<string>5</string>
 			</array>
 			<key>Titles</key>
 			<array>
-				<string>Significant updates only</string>
 				<string>Three kilometers</string>
 				<string>One kilometer</string>
 				<string>One hundred meters</string>
 				<string>Ten meters</string>
 				<string>Best available</string>
 			</array>
+		</dict>
+		<dict>
+			<key>Type</key>
+			<string>PSTextFieldSpecifier</string>
+			<key>Title</key>
+			<string>Distance Filter (meters)</string>
+			<key>KeyboardType</key>
+			<string>NumberPad</string>
+			<key>Key</key>
+			<string>locationDistanceFilter</string>
+			<key>DefaultValue</key>
+			<string>1000</string>
 		</dict>
 	</array>
 	<key>StringsTable</key>

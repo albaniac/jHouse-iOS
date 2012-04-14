@@ -85,6 +85,10 @@
     [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
     [self.navigationController setToolbarHidden:NO animated:NO];
     
+    // Register application state notifications so that we can handle them
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willEnterForeground) name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willResignActive) name:UIApplicationWillResignActiveNotification object:nil];
+    
     [self loadVideo];
 }
 
@@ -92,6 +96,10 @@
 {
     [super viewWillDisappear:animated];
     
+    // Unregister application state notifications
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillEnterForegroundNotification object:nil];
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:UIApplicationWillResignActiveNotification object:nil];
+
     // Close the connection when the view isn't active
     [urlConnection cancel];
 }
@@ -330,7 +338,7 @@
 - (IBAction)buttonPanRightTouchDown:(UIButton *)sender 
 {
     [self fadeInButton:sender andImageView:self.imageViewPanRight];
-    
+
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:self.panRightUrl];
     (void)[[NSURLConnection alloc] initWithRequest:urlRequest delegate:nil];
 }
@@ -338,7 +346,7 @@
 - (IBAction)buttonPanRightTouchUp:(UIButton *)sender 
 {
     [self fadeOutButton:sender andImageView:self.imageViewPanRight];
-    
+
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:self.panStopUrl];
     (void)[[NSURLConnection alloc] initWithRequest:urlRequest delegate:nil];
 }
@@ -429,7 +437,9 @@
 {
     // TODO - Video doesn't reload on viewWillAppear after config change! why???
     if (urlConnection != nil)
+    {
         [urlConnection cancel];
+    }
     
     NSInteger videoQualityInteger = [[NSUserDefaults standardUserDefaults] integerForKey:JHWebcamVideoQuality];
     NSString *videoQualityString = [self videoQualityIntegerToString:videoQualityInteger];
@@ -437,4 +447,22 @@
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:[self.videoUrl URLByAppendingPathComponent:videoQualityString]]; 
     urlConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];    
 }
+
+#pragma mark - App state handlers
+
+- (void)willEnterForeground
+{
+    // Start video when the app comes back to the foreground
+    [self loadVideo];
+}
+
+- (void)willResignActive
+{
+    // Close the connection when the app goes into the background
+    if (urlConnection != nil)
+    {
+        [urlConnection cancel];
+    }
+}
+
 @end

@@ -27,8 +27,7 @@
 @property (strong, nonatomic) IBOutlet UIButton *buttonPanRight;
 
 
-@property (weak, nonatomic) NSURL *videoUrl;
-
+@property (strong, nonatomic) NSURL *videoUrl;
 @property (strong, nonatomic) NSURL *panUpUrl;
 @property (strong, nonatomic) NSURL *panDownUrl;
 @property (strong, nonatomic) NSURL *panLeftUrl;

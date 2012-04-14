@@ -10,9 +10,17 @@
 #import <CoreLocation/CoreLocation.h>
 #import "JHServerConfig.h"
 
-@interface JHLocationUpdater : NSObject <CLLocationManagerDelegate, JHServerConfigDelegate>
+@interface JHLocationUpdater : NSObject <NSURLConnectionDelegate, NSURLConnectionDataDelegate, CLLocationManagerDelegate>
 
-- (void)startUpdatingLocationAtUrl:(NSURL *)locationUrl;
+//@property (weak, nonatomic) NSURL *configURL;
+
+//+ (JHLocationUpdater *)initWithURL:(NSURL *)url;
++ (JHLocationUpdater *)shared;
+
+//- (void)startUpdatingLocationAtUrl:(NSURL *)locationUrl;
+- (void)startUpdatingLocation;
+- (void)enteringBackground;
+//- (void)becomingActive;
 - (void)stopAllUpdates;
 
 @end

@@ -8,8 +8,8 @@
 
 #import "JHInitialViewController.h"
 #import "JHConstants.h"
-#import "JHAppDelegate.h"
 #import "JHConfig.h"
+#import "JHLocationUpdater.h"
 #import <QuartzCore/QuartzCore.h>
 
 @interface JHInitialViewController ()
@@ -42,7 +42,25 @@
 	// Do any additional setup after loading the view.
     
     [self.activityIndicator startAnimating];
-    [self getConfigFromServer];
+    
+    /*
+    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground)
+    {
+        [[JHConfig shared] hydrateFromCache];
+        NSURL *locationURL = [[JHConfig shared] locationConfigURL];
+        if (locationURL != nil)
+        {
+            [self startLocationUpdateAtURL:locationURL];
+        }
+            
+    }
+    else
+    {
+        [self getConfigFromServer];        
+    }
+     */
+    
+    [self getConfigFromServer];        
 }
 
 - (void)viewDidUnload
@@ -120,7 +138,7 @@
         [[JHConfig shared] setWebcamConfigURL:webcamURL];
         [[JHConfig shared] setLocationConfigURL:locationURL];
         
-        [self startLocationUpdateAtURL:locationURL];
+        //[self startLocationUpdateAtURL:locationURL];
         
         [self performSegueWithIdentifier:@"LoadApp" sender:self];
         
@@ -128,21 +146,25 @@
     }
 }
 
+/*
 - (void)startLocationUpdateAtURL:(NSURL *)url
 {
-    BOOL sendUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationSendUpdates];
+    BOOL sendLocationUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationSendUpdates];
 
-    JHAppDelegate *appDelegate = (JHAppDelegate *)[[UIApplication sharedApplication] delegate];
+    //JHAppDelegate *appDelegate = (JHAppDelegate *)[[UIApplication sharedApplication] delegate];
 
-    if (sendUpdates == YES)
-    {        
-        [appDelegate.locationUpdater startUpdatingLocationAtUrl:url];
+    if (sendLocationUpdates == YES)
+    {
+        [JHLocationUpdater initWithURL:url];
+        //[appDelegate.locationUpdater startUpdatingLocationAtUrl:url];
     }
     else
     {
-        [appDelegate.locationUpdater stopAllUpdates];
+        [[JHLocationUpdater shared] stopAllUpdates];
+        //[appDelegate.locationUpdater stopAllUpdates];
     }
     
 }
+*/
 
 @end

@@ -8,23 +8,24 @@
 
 #import "JHAppDelegate.h"
 #import "JHConstants.h"
+#import "JHLocationUpdater.h"
+#import "JHConfig.h"
 
 @implementation JHAppDelegate
 
 @synthesize window = _window;
-@synthesize locationUpdater = _locationUpdater;
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    if ([[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL] == nil)
+    BOOL isInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
+    
+    if ([[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL] == nil && !isInBackground)
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Server URL" message:@"You must specify the server URL" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [alertView setAlertViewStyle:UIAlertViewStylePlainTextInput];
         [alertView show];
     }
     
-    self.locationUpdater = [[JHLocationUpdater alloc] init];
-
     return YES;
 }
 
@@ -38,6 +39,19 @@
 {
     // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later. 
     // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
+    
+    [[JHConfig shared] dehydrateToCache];
+    
+    BOOL sendLocationUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationSendUpdates];
+    BOOL sendBackgroundLocationUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationBackgroundUpdates];
+    if (sendLocationUpdates && sendBackgroundLocationUpdates)
+    {
+        [[JHLocationUpdater shared] enteringBackground];
+    }
+    else
+    {
+        [[JHLocationUpdater shared] stopAllUpdates];
+    }
 }
 
 - (void)applicationWillEnterForeground:(UIApplication *)application
@@ -48,6 +62,12 @@
 - (void)applicationDidBecomeActive:(UIApplication *)application
 {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    
+    BOOL sendLocationUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationSendUpdates];
+    if (sendLocationUpdates)
+    {
+        [[JHLocationUpdater shared] startUpdatingLocation];
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application

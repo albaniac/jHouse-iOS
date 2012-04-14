@@ -12,6 +12,9 @@
 
 + (JHConfig *)shared;
 
+- (void)dehydrateToCache;
+- (void)hydrateFromCache;
+
 @property (nonatomic, retain) NSURL *webcamConfigURL;
 @property (nonatomic, retain) NSURL *locationConfigURL;
 
