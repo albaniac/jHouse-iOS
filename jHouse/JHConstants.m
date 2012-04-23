@@ -20,6 +20,7 @@ NSString * const JHConfigLocationAccuracy = @"locationAccuracy";
 NSString * const JHConfigLocationSendUpdates = @"locationSendUpdates";
 NSString * const JHConfigLocationBackgroundUpdates = @"locationBackgroundUpdates";
 NSString * const JHConfigLocationDistanceFilter = @"locationDistanceFilter";
+NSString * const JHConfigAppUUID = @"jHouseUUID";
 
 // Web service locations
 //NSString * const JHWebcamListUri = @"controllers/webcam/list.json";

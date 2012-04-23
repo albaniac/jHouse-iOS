@@ -20,6 +20,7 @@ extern NSString * const JHConfigLocationAccuracy;
 extern NSString * const JHConfigLocationSendUpdates;
 extern NSString * const JHConfigLocationBackgroundUpdates;
 extern NSString * const JHConfigLocationDistanceFilter;
+extern NSString * const JHConfigAppUUID;
 
 // Web service locations
 //extern NSString * const JHWebcamListUri;

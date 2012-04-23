@@ -17,6 +17,8 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [self createUUID];
+    
     BOOL isInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
     
     if ([[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL] == nil && !isInBackground)
@@ -80,6 +82,22 @@
 - (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     [[NSUserDefaults standardUserDefaults] setValue:[alertView textFieldAtIndex:0].text forKey:JHServerURL];
+}
+
+#pragma mark - Misc Methods
+
+- (void)createUUID
+{
+    // If UUID isn't found, generate one and save it
+    if (![[NSUserDefaults standardUserDefaults] valueForKey:JHConfigAppUUID])
+    {
+        CFUUIDRef uuidRef = CFUUIDCreate(NULL);
+        CFStringRef uuidStrRef = CFUUIDCreateString(NULL, uuidRef);
+        NSString *uuid = [NSString stringWithFormat:@"%@", uuidStrRef];
+        [[NSUserDefaults standardUserDefaults] setValue:uuid forKey:JHConfigAppUUID];
+        CFRelease(uuidRef);
+        CFRelease(uuidStrRef);
+    }
 }
 
 @end
