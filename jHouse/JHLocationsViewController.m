@@ -43,14 +43,15 @@
     [super viewDidLoad];
 	// Do any additional setup after loading the view.
     
-    if (config == nil)
+    /*if (config == nil)
     {
         NSURL *configURL = [[JHConfig shared] locationConfigURL];
         [self getConfigFromServerAtURL:configURL];
-    }
-
+    }*/
+    [self getMapAnnotations];
+    
     self.mapView.mapType = MKMapTypeStandard;
-    self.mapView.showsUserLocation = YES;   
+    self.mapView.showsUserLocation = YES;  
     self.mapView.userTrackingMode = MKUserTrackingModeFollow;    
 }
 
@@ -90,11 +91,11 @@
 
 - (void)parseConfigData:(NSDictionary *)theConfig
 {    
-    NSString *serverURLString = [[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL];
-    NSURL *serverURL = [NSURL URLWithString:serverURLString];
+    //NSString *serverURLString = [[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL];
+    //NSURL *serverURL = [NSURL URLWithString:serverURLString];
     
-    if ([theConfig objectForKey:@"getAllNewestLocation"] != nil)
-        allNewestLocationURL = [serverURL URLByAppendingPathComponent:[theConfig objectForKey:@"getAllNewestLocation"]];
+    //if ([theConfig objectForKey:@"getAllNewestLocation"] != nil)
+    //    allNewestLocationURL = [serverURL URLByAppendingPathComponent:[theConfig objectForKey:@"getAllNewestLocation"]];
     
 
     [progressHUD hide:YES];
@@ -123,6 +124,7 @@
             [point setCoordinate:coordinate];
             [point setTitle:[NSString stringWithFormat:@"%@ %@", [location valueForKey:@"firstname"], [location valueForKey:@"lastname"]]];
             [point setSubtitle:[NSDateFormatter localizedStringFromDate:[NSDate dateWithTimeIntervalSince1970:[[location valueForKey:@"timestamp"] doubleValue] / 1000.0] dateStyle:NSDateFormatterShortStyle timeStyle:NSDateFormatterShortStyle]];
+            
             [self.mapView addAnnotation:point];
         }
     }
@@ -147,17 +149,18 @@
     
     if (serverURLString != nil && serverURLString != @"")
     {        
-        NSString *newestAll = [config valueForKey:@"newestAll"];
+        /*NSString *newestAll = [config valueForKey:@"newestAll"];
         
         if (newestAll == nil)
         {
             [progressHUD hide:YES];
         }
         else
-        {
+        {*/
             NSURL *serverURL = [NSURL URLWithString:serverURLString];
-            serverURL = [serverURL URLByAppendingPathComponent:newestAll];
-            
+            serverURL = [serverURL URLByAppendingPathComponent:JHLocationNewestPath];
+            //serverURL = [serverURL URLByAppendingPathComponent:newestAll];
+                
             if (serverURL == nil)
             {
                 [progressHUD hide:YES];                
@@ -175,7 +178,7 @@
                 [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Accept"];
                 (void)[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];            
             }
-        }
+        //}
     }
 
 }
@@ -200,6 +203,15 @@
         annotationView = [[MKPinAnnotationView alloc] initWithAnnotation:annotation reuseIdentifier:viewIdentifier];
         //[annotationView setAnimatesDrop:YES];
         [annotationView setCanShowCallout:YES];
+    }
+    
+    if (annotation == mapView.userLocation)
+    {
+        [annotationView setPinColor:MKPinAnnotationColorGreen];
+    }
+    else 
+    {
+        [annotationView setPinColor:MKPinAnnotationColorRed];    
     }
     
     return annotationView;

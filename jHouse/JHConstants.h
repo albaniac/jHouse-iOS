@@ -25,5 +25,8 @@ extern NSString * const JHConfigAppUUID;
 // Web service locations
 //extern NSString * const JHWebcamListUri;
 extern NSString * const JHLocationUpdatePath;
+extern NSString * const JHLocationNewestPath;
+extern NSString * const JHApnsUpdatePath;
+extern NSString * const JHDevicesGetPath;
 
 @end

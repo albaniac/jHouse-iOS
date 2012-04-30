@@ -43,23 +43,6 @@
     
     [self.activityIndicator startAnimating];
     
-    /*
-    if ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground)
-    {
-        [[JHConfig shared] hydrateFromCache];
-        NSURL *locationURL = [[JHConfig shared] locationConfigURL];
-        if (locationURL != nil)
-        {
-            [self startLocationUpdateAtURL:locationURL];
-        }
-            
-    }
-    else
-    {
-        [self getConfigFromServer];        
-    }
-     */
-    
     [self getConfigFromServer];        
 }
 
@@ -137,34 +120,11 @@
         
         [[JHConfig shared] setWebcamConfigURL:webcamURL];
         [[JHConfig shared] setLocationConfigURL:locationURL];
-        
-        //[self startLocationUpdateAtURL:locationURL];
-        
+                
         [self performSegueWithIdentifier:@"LoadApp" sender:self];
         
         [self.activityIndicator stopAnimating];
     }
 }
-
-/*
-- (void)startLocationUpdateAtURL:(NSURL *)url
-{
-    BOOL sendLocationUpdates = [[NSUserDefaults standardUserDefaults] boolForKey:JHConfigLocationSendUpdates];
-
-    //JHAppDelegate *appDelegate = (JHAppDelegate *)[[UIApplication sharedApplication] delegate];
-
-    if (sendLocationUpdates == YES)
-    {
-        [JHLocationUpdater initWithURL:url];
-        //[appDelegate.locationUpdater startUpdatingLocationAtUrl:url];
-    }
-    else
-    {
-        [[JHLocationUpdater shared] stopAllUpdates];
-        //[appDelegate.locationUpdater stopAllUpdates];
-    }
-    
-}
-*/
 
 @end

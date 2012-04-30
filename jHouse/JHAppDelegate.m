@@ -10,6 +10,9 @@
 #import "JHConstants.h"
 #import "JHLocationUpdater.h"
 #import "JHConfig.h"
+#import "JHApnsProviderUpdater.h"
+
+#include "TargetConditionals.h"
 
 @implementation JHAppDelegate
 
@@ -17,10 +20,18 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    // Create app's UUID
     [self createUUID];
     
+#if !(TARGET_IPHONE_SIMULATOR)
+    // Register for push notifications
+    [[UIApplication sharedApplication] registerForRemoteNotificationTypes:(UIRemoteNotificationTypeAlert | UIRemoteNotificationTypeBadge | UIRemoteNotificationTypeSound)];
+#endif
+    
+    // Get app background status
     BOOL isInBackground = ([UIApplication sharedApplication].applicationState == UIApplicationStateBackground);
     
+    // If we don't have the server URL and we're not in the background, ask the user for the server URL
     if ([[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL] == nil && !isInBackground)
     {
         UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Server URL" message:@"You must specify the server URL" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
@@ -75,6 +86,29 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+#pragma mark - Push notification delegates
+
+- (void)application:(UIApplication *)application didRegisterForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
+{
+    NSString *token = [[[deviceToken description] stringByTrimmingCharactersInSet:
+                           [NSCharacterSet characterSetWithCharactersInString:@"<>"]] 
+                          stringByReplacingOccurrencesOfString:@" " withString:@""];
+    
+    [[[JHApnsProviderUpdater alloc] init] updateProviderWithToken:token];
+}
+
+- (void)application:(UIApplication *)application didFailToRegisterForRemoteNotificationsWithError:(NSError *)error
+{
+    UIAlertView *alertView = [[UIAlertView alloc] initWithTitle:@"Error" message:[NSString stringWithFormat:@"Failed to register for push notifications: %@", error.localizedDescription] delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+    [alertView setAlertViewStyle:UIAlertViewStyleDefault];
+    [alertView show];
+}
+
+- (void)application:(UIApplication *)application didReceiveRemoteNotification:(NSDictionary *)userInfo
+{
+    
 }
 
 #pragma mark - UIAlertViewDelegate

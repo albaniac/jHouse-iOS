@@ -24,6 +24,9 @@ NSString * const JHConfigAppUUID = @"jHouseUUID";
 
 // Web service locations
 //NSString * const JHWebcamListUri = @"controllers/webcam/list.json";
-NSString * const JHLocationUpdatePath = @"controllers/location/userUpdate";
+NSString * const JHLocationUpdatePath = @"controllers/location/user";
+NSString * const JHLocationNewestPath = @"controllers/location/newest";
+NSString * const JHApnsUpdatePath = @"controllers/appleios/device_tokens";
+NSString * const JHDevicesGetPath = @"controllers/device/all";
 
 @end

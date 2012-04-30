@@ -120,7 +120,7 @@ static JHLocationUpdater *sharedInstance;
         
         NSError *error = nil;
         NSData* jsonData = [NSJSONSerialization dataWithJSONObject:location 
-                                                           options:NSJSONWritingPrettyPrinted error:&error];
+                                                           options:NSJSONReadingMutableLeaves error:&error];
         
         if (userUpdateURL != nil)
         {
@@ -132,7 +132,7 @@ static JHLocationUpdater *sharedInstance;
                           
             NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:userUpdateURL];
             [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
-            [urlRequest setHTTPMethod:@"POST"];
+            [urlRequest setHTTPMethod:@"PUT"];
             [urlRequest setHTTPBody:jsonData];
             (void)[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];            
         }
