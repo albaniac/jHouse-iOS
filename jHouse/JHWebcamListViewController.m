@@ -61,9 +61,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+    
+    // Hide the bottom toolbar (only used in the detail view)
     [self.navigationController setToolbarHidden:YES animated:YES];    
 }
 
@@ -77,8 +76,7 @@
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        //return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
-        return (interfaceOrientation == UIInterfaceOrientationPortrait);
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
     } else {
         return YES;
     }

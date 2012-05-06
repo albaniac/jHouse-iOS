@@ -7,8 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "JHCellBinarySwitch.h"
+#import "JHCellMultilevelSwitch.h"
 
-@interface JHDevicesListViewController : UITableViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate>
+@interface JHDevicesListViewController : UITableViewController <NSURLConnectionDelegate, NSURLConnectionDataDelegate, JHCellBinarySwitchDelegate, JHCellMultilevelSwitchDelegate>
 
 @property (strong, nonatomic) IBOutlet UITableView *devicesTableView;
 

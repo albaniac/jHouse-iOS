@@ -38,6 +38,11 @@
 		533A04081536683800E88E67 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 533A04071536683800E88E67 /* Default@2x.png */; };
 		533A040A1536689500E88E67 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = 533A04091536689500E88E67 /* Default.png */; };
 		53949D14154E192900082F03 /* JHDevicesListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949D13154E192900082F03 /* JHDevicesListViewController.m */; };
+		53949D1715559A7E00082F03 /* JHWebserviceCall.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949D1615559A7E00082F03 /* JHWebserviceCall.m */; };
+		53949D1A1555EB4100082F03 /* lightbulb.png in Resources */ = {isa = PBXBuildFile; fileRef = 53949D181555EB4100082F03 /* lightbulb.png */; };
+		53949D1B1555EB4100082F03 /* lightbulb@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 53949D191555EB4100082F03 /* lightbulb@2x.png */; };
+		53949D1E1556128A00082F03 /* JHCellBinarySwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949D1D1556128A00082F03 /* JHCellBinarySwitch.m */; };
+		53949D21155627D000082F03 /* JHCellMultilevelSwitch.m in Sources */ = {isa = PBXBuildFile; fileRef = 53949D20155627D000082F03 /* JHCellMultilevelSwitch.m */; };
 		53AF2BB8152BE26900821354 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 53AF2BB7152BE26900821354 /* CoreLocation.framework */; };
 		53EE4B4715215B160077651F /* JHLocationsViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 53EE4B4615215B160077651F /* JHLocationsViewController.m */; };
 		53EE4B58152163620077651F /* Scanner.png in Resources */ = {isa = PBXBuildFile; fileRef = 53EE4B57152163620077651F /* Scanner.png */; };
@@ -111,6 +116,14 @@
 		533A04091536689500E88E67 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = SOURCE_ROOT; };
 		53949D12154E192900082F03 /* JHDevicesListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHDevicesListViewController.h; sourceTree = "<group>"; };
 		53949D13154E192900082F03 /* JHDevicesListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHDevicesListViewController.m; sourceTree = "<group>"; };
+		53949D1515559A7E00082F03 /* JHWebserviceCall.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHWebserviceCall.h; sourceTree = "<group>"; };
+		53949D1615559A7E00082F03 /* JHWebserviceCall.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHWebserviceCall.m; sourceTree = "<group>"; };
+		53949D181555EB4100082F03 /* lightbulb.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lightbulb.png; sourceTree = "<group>"; };
+		53949D191555EB4100082F03 /* lightbulb@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lightbulb@2x.png"; sourceTree = "<group>"; };
+		53949D1C1556128A00082F03 /* JHCellBinarySwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCellBinarySwitch.h; sourceTree = "<group>"; };
+		53949D1D1556128A00082F03 /* JHCellBinarySwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCellBinarySwitch.m; sourceTree = "<group>"; };
+		53949D1F155627D000082F03 /* JHCellMultilevelSwitch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHCellMultilevelSwitch.h; sourceTree = "<group>"; };
+		53949D20155627D000082F03 /* JHCellMultilevelSwitch.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHCellMultilevelSwitch.m; sourceTree = "<group>"; };
 		53AF2BB7152BE26900821354 /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		53EE4B4515215B160077651F /* JHLocationsViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JHLocationsViewController.h; sourceTree = "<group>"; };
 		53EE4B4615215B160077651F /* JHLocationsViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = JHLocationsViewController.m; sourceTree = "<group>"; };
@@ -213,6 +226,8 @@
 				5311B2B6151FEFBF00DC90EE /* JHConstants.m */,
 				53EEEB59152E6B8E00CC961F /* JHServerConfig.h */,
 				53EEEB5A152E6B8E00CC961F /* JHServerConfig.m */,
+				53949D1515559A7E00082F03 /* JHWebserviceCall.h */,
+				53949D1615559A7E00082F03 /* JHWebserviceCall.m */,
 				53EEEB60152E88B100CC961F /* JHInitialViewController.h */,
 				53EEEB61152E88B100CC961F /* JHInitialViewController.m */,
 				53EEEB63152E976400CC961F /* JHConfig.h */,
@@ -260,6 +275,8 @@
 		5311B2A2151FBA3900DC90EE /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				53949D181555EB4100082F03 /* lightbulb.png */,
+				53949D191555EB4100082F03 /* lightbulb@2x.png */,
 				533A04091536689500E88E67 /* Default.png */,
 				533A04071536683800E88E67 /* Default@2x.png */,
 				53EEEB6C152F95CA00CC961F /* jHouse-transparent.png */,
@@ -313,6 +330,10 @@
 			children = (
 				53949D12154E192900082F03 /* JHDevicesListViewController.h */,
 				53949D13154E192900082F03 /* JHDevicesListViewController.m */,
+				53949D1C1556128A00082F03 /* JHCellBinarySwitch.h */,
+				53949D1D1556128A00082F03 /* JHCellBinarySwitch.m */,
+				53949D1F155627D000082F03 /* JHCellMultilevelSwitch.h */,
+				53949D20155627D000082F03 /* JHCellMultilevelSwitch.m */,
 			);
 			name = Devices;
 			sourceTree = "<group>";
@@ -424,6 +445,8 @@
 				533A0403153666F700E88E67 /* Icon.png in Resources */,
 				533A04081536683800E88E67 /* Default@2x.png in Resources */,
 				533A040A1536689500E88E67 /* Default.png in Resources */,
+				53949D1A1555EB4100082F03 /* lightbulb.png in Resources */,
+				53949D1B1555EB4100082F03 /* lightbulb@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -473,6 +496,9 @@
 				53EEEB65152E976400CC961F /* JHConfig.m in Sources */,
 				5332A7B61548B33A00B51A8D /* JHApnsProviderUpdater.m in Sources */,
 				53949D14154E192900082F03 /* JHDevicesListViewController.m in Sources */,
+				53949D1715559A7E00082F03 /* JHWebserviceCall.m in Sources */,
+				53949D1E1556128A00082F03 /* JHCellBinarySwitch.m in Sources */,
+				53949D21155627D000082F03 /* JHCellMultilevelSwitch.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

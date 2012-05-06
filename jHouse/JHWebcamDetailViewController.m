@@ -81,8 +81,7 @@
 {
     [super viewWillAppear:animated];
     
-    [self.navigationController.navigationBar setBarStyle:UIBarStyleBlack];
-    [self.navigationController.toolbar setBarStyle:UIBarStyleBlack];
+    // Show the bottom toolbar
     [self.navigationController setToolbarHidden:NO animated:NO];
     
     // Register application state notifications so that we can handle them

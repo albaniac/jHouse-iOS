@@ -28,5 +28,6 @@ extern NSString * const JHLocationUpdatePath;
 extern NSString * const JHLocationNewestPath;
 extern NSString * const JHApnsUpdatePath;
 extern NSString * const JHDevicesGetPath;
+extern NSString * const JHDeviceActionPath;
 
 @end

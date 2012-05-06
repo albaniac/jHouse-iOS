@@ -9,21 +9,22 @@
 #import "JHDevicesListViewController.h"
 #import "JHConstants.h"
 #import "MBProgressHUD.h"
+#import "JHWebserviceCall.h"
 
 @interface JHDevicesListViewController ()
 {
 @private
-    NSArray *devices;
+    NSMutableArray *devices;
     NSMutableData *receivedData;
     NSString *serverLogin;
     NSString *serverPassword;
-    MBProgressHUD *progressHUD;
-    
+    MBProgressHUD *progressHUD;    
 }
 @end
 
 @implementation JHDevicesListViewController
-@synthesize devicesTableView;
+
+@synthesize devicesTableView = _devicesTableView;
 
 - (id)initWithStyle:(UITableViewStyle)style
 {
@@ -62,7 +63,11 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        return (interfaceOrientation != UIInterfaceOrientationPortraitUpsideDown);
+    } else {
+        return YES;
+    }
 }
 
 #pragma mark - Table view data source
@@ -81,16 +86,47 @@
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    static NSString *CellIdentifier = @"Cell";
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:CellIdentifier];
+    static NSString *DefaultCellId = @"DefaultCell";
+    static NSString *BinarySwitchCellId = @"BinarySwitchCell";
+    static NSString *MultilevelSwitchCellId = @"MultilevelSwitchCell";
     
-    if (cell != nil && devices != nil)
+    NSArray *deviceClasses = [[devices objectAtIndex:indexPath.row] objectForKey:@"classes"];
+    
+    if ([deviceClasses containsObject:@"net.gregrapp.jhouse.device.classes.MultilevelSwitch"] == YES)
     {
+        JHCellMultilevelSwitch *cell = [tableView dequeueReusableCellWithIdentifier:MultilevelSwitchCellId];
+        [cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];        
+        [cell setDelegate:self];
+        NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        [cell.slider setValue:value];
+        
+        return cell;        
+    }
+    else if ([deviceClasses containsObject:@"net.gregrapp.jhouse.device.classes.BinarySwitch"] == YES)
+    {
+        JHCellBinarySwitch *cell = [tableView dequeueReusableCellWithIdentifier:BinarySwitchCellId];
+        [cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];        
+        [cell setDelegate:self];
+        NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        if (value == 255)
+        {
+            [cell.binarySwitch setOn:YES];
+        }
+        else
+        {
+            [cell.binarySwitch setOn:NO];
+        }
+        
+        return cell;
+    }
+    else 
+    {
+        UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DefaultCellId];                
         cell.textLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"name"];
         cell.detailTextLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"text"];
+        
+        return cell;
     }
-    
-    return cell;
 }
 
 /*
@@ -186,7 +222,6 @@
             [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Accept"];
             (void)[[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];            
         }
-        
     }
 }
 
@@ -195,11 +230,11 @@
 - (void)parseTableData
 {
     NSError *jsonError = nil;
-    NSDictionary *devicesJson = [NSJSONSerialization JSONObjectWithData:receivedData options:NSJSONReadingMutableLeaves error:&jsonError];
+    NSMutableDictionary *devicesJson = [NSJSONSerialization JSONObjectWithData:receivedData options:(NSJSONReadingMutableLeaves | NSJSONReadingMutableContainers)  error:&jsonError];
     
     if (jsonError != nil)
     {
-        [[[UIAlertView alloc] initWithTitle:@"Error Parsing Data" message:jsonError.debugDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];            
+        [[[UIAlertView alloc] initWithTitle:@"Error" message:jsonError.debugDescription delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];            
     }
     else
     {
@@ -302,5 +337,65 @@
 - (IBAction)refreshTable:(UIBarButtonItem *)sender
 {
     [self getTableData];
+}
+
+- (void)cellForBinarySwitchChange:(JHCellBinarySwitch *)sender
+{
+    NSIndexPath *indexPath = [self.devicesTableView indexPathForCell:sender];
+    NSInteger deviceId = [[[devices objectAtIndex:indexPath.row] valueForKey:@"id"] integerValue];
+    NSString *action = sender.binarySwitch.on?@"setOn":@"setOff";
+    NSString *serverURLString = [[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL];
+    
+    if (serverURLString != nil && serverURLString != @"")
+    {                
+        NSURL *serverURL = [NSURL URLWithString:serverURLString];
+        serverURL = [serverURL URLByAppendingPathComponent:[NSString stringWithFormat:JHDeviceActionPath, deviceId, action]];
+        
+        if (serverURL == nil)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Server URL is nil" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];            
+        }
+        else
+        {
+            // Create an empty args list or the server will freak out
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+            [dictionary setObject:[[NSArray alloc] init] forKey:@"args"];
+            [JHWebserviceCall initWithPutURL:serverURL body:dictionary delegate:nil];
+            
+            // Update device array to reflect new device state
+            NSNumber *state = [NSNumber numberWithInt:sender.binarySwitch.on?255:0];
+            [[devices objectAtIndex:indexPath.row] setValue:state forKey:@"value"];
+        }
+    }
+}
+
+- (void)cellForMultilevelSwitchChange:(JHCellMultilevelSwitch *)sender
+{
+    NSIndexPath *indexPath = [self.devicesTableView indexPathForCell:sender];
+    NSInteger deviceId = [[[devices objectAtIndex:indexPath.row] valueForKey:@"id"] integerValue];
+    NSString *action = @"setLevel";
+    NSString *serverURLString = [[NSUserDefaults standardUserDefaults] stringForKey:JHServerURL];
+    
+    if (serverURLString != nil && serverURLString != @"")
+    {                
+        NSURL *serverURL = [NSURL URLWithString:serverURLString];
+        serverURL = [serverURL URLByAppendingPathComponent:[NSString stringWithFormat:JHDeviceActionPath, deviceId, action]];
+        
+        if (serverURL == nil)
+        {
+            [[[UIAlertView alloc] initWithTitle:@"Error" message:@"Server URL is nil" delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];            
+        }
+        else
+        {
+            // Create an empty args list or the server will freak out
+            NSMutableDictionary *dictionary = [[NSMutableDictionary alloc] init];
+            [dictionary setObject:[NSArray arrayWithObject:[NSNumber numberWithInt:sender.slider.value]] forKey:@"args"];
+            [JHWebserviceCall initWithPutURL:serverURL body:dictionary delegate:nil];
+            
+            // Update device array to reflect new device state
+            NSNumber *level = [NSNumber numberWithInt:sender.slider.value];
+            [[devices objectAtIndex:indexPath.row] setValue:level forKey:@"value"];
+        }
+    }
 }
 @end

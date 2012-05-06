@@ -28,5 +28,6 @@ NSString * const JHLocationUpdatePath = @"controllers/location/user";
 NSString * const JHLocationNewestPath = @"controllers/location/newest";
 NSString * const JHApnsUpdatePath = @"controllers/appleios/device_tokens";
 NSString * const JHDevicesGetPath = @"controllers/device/all";
+NSString * const JHDeviceActionPath = @"controllers/device/%d/action/%@";
 
 @end
