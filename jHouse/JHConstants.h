@@ -27,7 +27,7 @@ extern NSString * const JHConfigAppUUID;
 extern NSString * const JHLocationUpdatePath;
 extern NSString * const JHLocationNewestPath;
 extern NSString * const JHApnsUpdatePath;
-extern NSString * const JHDevicesGetPath;
+extern NSString * const JHDevicesByLocationGetPath;
 extern NSString * const JHDeviceActionPath;
 
 @end

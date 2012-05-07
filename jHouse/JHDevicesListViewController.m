@@ -75,13 +75,28 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // Return the number of sections.
-    return 1;
+    //return 1;
+    return [devices count];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     // Return the number of rows in the section.
-    return [devices count];
+    //return [devices count];
+    return [(NSArray *)[devices objectAtIndex:section] count];
+}
+
+- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
+{
+    NSString *title;
+    
+    if ([(NSArray *)[devices objectAtIndex:section] count] > 0)
+    {
+        NSString *floor = [[(NSArray *)[devices objectAtIndex:section] objectAtIndex:0] valueForKey:@"floor"];
+        NSString *room = [[(NSArray *)[devices objectAtIndex:section] objectAtIndex:0] valueForKey:@"room"];
+        title = [NSString stringWithFormat:@"%@ - %@", floor, room];
+    }
+    return title;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -90,14 +105,17 @@
     static NSString *BinarySwitchCellId = @"BinarySwitchCell";
     static NSString *MultilevelSwitchCellId = @"MultilevelSwitchCell";
     
-    NSArray *deviceClasses = [[devices objectAtIndex:indexPath.row] objectForKey:@"classes"];
+    //NSArray *deviceClasses = [[devices objectAtIndex:indexPath.row] objectForKey:@"classes"];
+    NSArray *deviceClasses = [[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] objectForKey:@"classes"];
     
     if ([deviceClasses containsObject:@"net.gregrapp.jhouse.device.classes.MultilevelSwitch"] == YES)
     {
         JHCellMultilevelSwitch *cell = [tableView dequeueReusableCellWithIdentifier:MultilevelSwitchCellId];
-        [cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];        
+        //[cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];
+        [cell.label setText:[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"name"]];
         [cell setDelegate:self];
-        NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        //NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        NSInteger value = [[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
         [cell.slider setValue:value];
         
         return cell;        
@@ -105,9 +123,11 @@
     else if ([deviceClasses containsObject:@"net.gregrapp.jhouse.device.classes.BinarySwitch"] == YES)
     {
         JHCellBinarySwitch *cell = [tableView dequeueReusableCellWithIdentifier:BinarySwitchCellId];
-        [cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];        
+        [cell.label setText:[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"name"]];
+        //[cell.label setText:[[devices objectAtIndex:indexPath.row] valueForKey:@"name"]];        
         [cell setDelegate:self];
-        NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        //NSInteger value = [[[devices objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
+        NSInteger value = [[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"value"] integerValue];
         if (value == 255)
         {
             [cell.binarySwitch setOn:YES];
@@ -122,9 +142,10 @@
     else 
     {
         UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:DefaultCellId];                
-        cell.textLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"name"];
-        cell.detailTextLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"text"];
-        
+        //cell.textLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"name"];
+        [cell.textLabel setText:[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"name"]];
+        //cell.detailTextLabel.text = [[devices objectAtIndex:indexPath.row] valueForKey:@"text"];
+        [cell.detailTextLabel setText:[[(NSArray *)[devices objectAtIndex:indexPath.section] objectAtIndex:indexPath.row] valueForKey:@"text"]];
         return cell;
     }
 }
@@ -203,7 +224,7 @@
     if (serverURLString != nil && serverURLString != @"")
     {                
         NSURL *serverURL = [NSURL URLWithString:serverURLString];
-        serverURL = [serverURL URLByAppendingPathComponent:JHDevicesGetPath];
+        serverURL = [serverURL URLByAppendingPathComponent:JHDevicesByLocationGetPath];
         
         if (serverURL == nil)
         {
@@ -238,7 +259,20 @@
     }
     else
     {
-        devices = [devicesJson objectForKey:@"devices"];        
+        devices = [devicesJson objectForKey:@"devices"];
+        
+        // Sort the array alphabetically based on "floor - room"
+        devices = (NSMutableArray *)[devices sortedArrayUsingComparator:^(id a, id b) {
+            NSString *floor1 = [[(NSArray *)a objectAtIndex:0] valueForKey:@"floor"];
+            NSString *room1 = [[(NSArray *)a objectAtIndex:0] valueForKey:@"room"];
+            NSString *first = [NSString stringWithFormat:@"%@ - %@", floor1, room1];
+
+            NSString *floor2 = [[(NSArray *)b objectAtIndex:0] valueForKey:@"floor"];
+            NSString *room2 = [[(NSArray *)b objectAtIndex:0] valueForKey:@"room"];
+            NSString *second = [NSString stringWithFormat:@"%@ - %@", floor2, room2];
+
+            return [first compare:second];
+        }];
     }
     
     [self.devicesTableView reloadData];
